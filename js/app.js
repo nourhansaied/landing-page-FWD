@@ -65,10 +65,11 @@ const renderView = {
         this.createAboutSection();
         this.createWorkSection();
         this.createBestShotSection();
+        this.createFooterContent();
 
         let mainNavLinks = document.querySelectorAll("nav ul li a");
         window.addEventListener("scroll", event => {
-            let fromTop = window.scrollY;
+            let fromTop = window.scrollY + 110;
 
             mainNavLinks.forEach(link => {
 
@@ -191,13 +192,35 @@ const renderView = {
     createBestShotSection: () => {
         const overlay = renderView.createHTMLTag('div');
         const bestShot = document.getElementById('best-shot');
-        const aboutContent = renderView.createHTMLTag('div');
-        aboutContent.innerHTML = `<h2 class="best-shot-desc">Every sunset is an opportunity to reset.</h2><p class='best-shot-content'>So, Just RELAX and SMILE</p>`;
+        const bestContent = renderView.createHTMLTag('div');
+        bestContent.innerHTML = `<h2 class="best-shot-desc">Every sunset is an opportunity to reset.</h2><p class='best-shot-content'>So, Just RELAX and SMILE</p>`;
         let newOverlay = overlay;
         newOverlay.className = 'overlay';
         bestShot.appendChild(newOverlay);
-        bestShot.appendChild(aboutContent);
-        aboutContent.className = "landing-container container";
+        bestShot.appendChild(bestContent);
+        bestContent.className = "landing-container container";
+
+    },
+    createFooterContent: () =>{
+        const footer = document.getElementsByClassName('page-footer')[0];
+        const footerContent = renderView.createHTMLTag('div');
+        const footerTitleContent = renderView.createHTMLTag('h2');
+        const footerUlContent = renderView.createHTMLTag('ul');
+        footerTitleContent.innerHTML = 'Contact me &#128526'
+        socialMedia.map(item => {
+            const li = renderView.createHTMLTag('li');
+            const anchor = renderView.createHTMLTag('a');
+            anchor.setAttribute('href',item.link);
+            anchor.innerText = item.name;
+            li.appendChild(anchor);
+            footerUlContent.appendChild(li);
+        });
+        footerTitleContent.className = 'section-main-title';
+        footerContent.append(footerTitleContent)
+        footerContent.append(footerUlContent);
+
+        footer.prepend(footerContent);
+        footerContent.className = "landing-container container";
 
     },
     createHTMLTag:(tagName) => {

@@ -27,3 +27,26 @@ const aboutText = {
     sub2: `To me, photography is an art of observation. It’s about finding something interesting in an ordinary place…
      I’ve found it has little to do with the things you see and everything to do with the way you see them.`
 }
+
+const socialMedia = [
+    {
+        name : 'Github',
+        link : 'https://github.com/nourhansaied'
+    },
+    {
+        name : 'Facebook',
+        link : 'https://www.facebook.com/NourhanBardalh/'
+    },
+    {
+        name : 'Instagram',
+        link : 'https://www.instagram.com/nourhansaied/'
+    },
+    {
+        name : 'LinkedIn',
+        link : 'https://www.linkedin.com/in/nourhansaeed/'
+    },
+    {
+        name : 'Behance',
+        link : 'https://github.com/nourhansaied'
+    }
+    ]

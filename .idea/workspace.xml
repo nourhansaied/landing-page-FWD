@@ -21,12 +21,7 @@
   <component name="ChangeListManager">
     <list default="true" id="6778bd41-ec8e-40d6-a678-e1980d255514" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/css/layout.css" beforeDir="false" afterPath="$PROJECT_DIR$/css/layout.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/css/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/css/styles.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/Logo/NS.psd" beforeDir="false" afterPath="$PROJECT_DIR$/images/Logo/NS.psd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/Logo/NS1.png" beforeDir="false" afterPath="$PROJECT_DIR$/images/Logo/NS1.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/portfolio/IMG_9629.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/js/content.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/content.js" afterDir="false" />
     </list>
@@ -76,7 +71,7 @@
       <workItem from="1600439286409" duration="20861000" />
       <workItem from="1600534863435" duration="2021000" />
       <workItem from="1600595394652" duration="3420000" />
-      <workItem from="1600633289169" duration="19885000" />
+      <workItem from="1600633289169" duration="22533000" />
     </task>
     <servers />
   </component>

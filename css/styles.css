@@ -218,6 +218,21 @@ section {
     color: var(--white-color);
 }
 
+.page-footer ul {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    margin-top: 3rem;
+}
+.page-footer li {
+    width: 50%;
+}
+
+.page-footer a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.3rem;
+}
 
 @media only screen and (min-width: 35em){
     .landing-container {
@@ -228,6 +243,34 @@ section {
 @media only screen and (max-width: 650px){
     .navbar-menu ul {
         display: none;
+    }
+    .page-footer ul, .work-statistics {
+        flex-direction: column;
+    }
+    #intro .section-title{
+        font-size: 1.5rem;
+    }
+    #intro .main-hero-content p{
+        font-size: 1rem;
+    }
+    section#about::before {
+        display: none;
+    }
+    section#work::before {
+        display: none;
+    }
+    .best-shot-desc,.section-main-title {
+        font-size: 1.5rem !important;
+    }
+    .landing-container,.page-footer {
+        padding: 1.5rem !important;
+    }
+    .page-footer li {
+        margin-bottom: 1rem;
+    }
+
+    .page-footer li a{
+        font-size: 0.8rem;
     }
 }
 .landing-container {
