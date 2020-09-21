@@ -18,6 +18,8 @@
 @import "layout.css";
 :root {
     --main-color: #c8a571;
+    --light-main-color: #ece7e1;
+    --white-color: #fff;
 }
 
 /* ---- Base Rules ---- */
@@ -29,39 +31,53 @@ body {
     background: #000000;
     margin: 0;
     font-family: 'Poppins', sans-serif;
-    color: #fff;
+    color: var(--white-color);
     box-sizing: border-box;
 }
 
 /* ---- Layout Rules ---- */
 main {
-    padding: 105px 0;
-}
-
-#intro {
-    min-height: 40vh;
-    padding-top: 3em;
+    padding: 99px 0 0;
 }
 
 section {
     position: relative;
-    min-height: 80vh;
 }
 
-
 /* ---- Module Rules ---- */
+.page-header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+    background: black;
+    z-index: 5;
+    height: 100px;
+}
+.slideUp {
+    transform: translateY(-100px);
+    transition: transform .4s ease-out;
+}
 
+.slideDown {
+    transform: translateY(0);
+    transition: transform .4s ease-out;
+}
 /* Navigation Styles*/
 .navbar-menu {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 1rem 2rem 0;
+}
+.logo a {
+    padding: 0.5rem 2rem 0;
+    display: inline-block;
 }
 .navbar-menu .logo img{
-    width: 240px;
-    margin: -50px;
+    width: 120px;
 }
+
 .navbar-menu ul {
     padding-left: 0;
     margin: 0;
@@ -71,59 +87,70 @@ section {
 .navbar-menu li {
     display: inline-block;
 }
+.navbar-menu li.current {
+    background-color: var(--main-color);
+}
 
-.navbar-menu .item p{
+.navbar-menu li  p{
     display: inline-block;
     padding: 1em;
     font-weight: bold;
-    text-decoration: none;
-    color: var(--main-color);
+    color: var(--light-main-color);
 }
-
-.navbar-menu .item:hover p{
+.navbar-menu li.current p {
+    color: black;
+}
+.navbar-menu li:hover p{
     color: pink;
     transition: all 0.3s ease;
 }
 
-/* Header Styles */
+/* Section intro Styles */
 
-/* Section Hero Styles */
-.page-header {
-    background: black;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 5;
-}
 #intro {
-    filter: grayscale(100%);
-    min-height: 100vh;
+    min-height: 40vh;
+    position: relative;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    justify-items: center;
+}
+
+#intro:before {
+    content: '';
+    width: 100%;
+    height: 100%;
     background: url('../images/DSC_0031.JPG') no-repeat fixed top;
     background-size: cover;
+    filter: grayscale(100%);
+    position: absolute;
 }
-#intro .overlay {
-    opacity: 0.5;
-    background-color: rgb(30, 66, 56);
-}
+
 .align-text-center {
     text-align: center;
 }
-.main-hero-content {
+
+#intro .main-hero-content {
     position: relative;
     padding: 6rem 0;
 }
+
 #intro .section-title {
     font-family: 'Kaushan Script', handwriting, serif;
     font-size: 4.25rem;
-    color: #fff;
+    color: var(--white-color);
     padding: 0 0 1rem;
     margin-bottom: 10px;
 }
+
 #intro .main-hero-content p {
     font-size: 1.2rem;
+    color: var(--light-main-color);
 }
-#intro .main-hero-content .goto-gallery {
-    border: 1px solid #fff;
+
+.goto-gallery {
+    border: 1px solid var(--white-color);
     display: inline-block;
     border-radius: 100px;
     padding: 1rem 3rem;
@@ -132,28 +159,26 @@ section {
     letter-spacing: 1px;
     transition: all 0.3s ease-in-out;
 }
-#intro .main-hero-content .goto-gallery:hover {
+
+.goto-gallery:hover {
     box-shadow: 0 10px 40px 0 rgba(0, 0, 0, 0.2);
-    color: #fff;
+    color: var(--white-color);
     background-color: var(--main-color);
     border-color: var(--main-color);
     cursor: pointer;
 }
 
-/* About section*/
-#about {
-    padding: 1rem 4rem;
-}
-
 /* Work statistic section*/
 #work {
     background-color: rgba(250, 250, 250,0.05);
+    padding: 3rem 0;
 }
 
 .work-statistics {
     display: flex;
     justify-content: center;
 }
+
 .work-box {
     padding: 1rem;
 }
@@ -167,26 +192,31 @@ section {
     align-items: center;
     justify-content: center;
 }
+
 #best-shot .overlay {
-    opacity: 0.25;
+    opacity: 0.5;
 }
+
 .best-shot-content {
+    text-align: center;
     position: relative;
+    margin-top: 5rem;
+}
+.best-shot-desc {
+    font-family: 'Kaushan Script', handwriting, serif;
+    font-size: 3.5rem;
+    color: var(--light-main-color);
+    text-align: center;
 }
     /* Footer Styles */
 .page-footer {
-    background: #000;
     padding: 3em;
-    color: #fff;
+    position: relative;
 }
 
 .page-footer p{
-    color: #fff;
+    color: var(--white-color);
 }
-
-
-/* ---- Theme Rules ---- */
-/* Landing Container Styles */
 
 
 @media only screen and (min-width: 35em){
@@ -195,47 +225,54 @@ section {
         padding: 4em;
     }
 }
+@media only screen and (max-width: 650px){
+    .navbar-menu ul {
+        display: none;
+    }
+}
 .landing-container {
-    padding: 1em;
+    padding: 3em;
     text-align: left;
     max-width: 1140px;
 }
 
 
-/* Background Circles */
-/* Note that background circles are created with psuedo elements before and after */
-/* Circles appear to be random do to use of :nth-of-type psuedo class */
-section .landing-container::before {
+/* Background for some sections */
+section#about::before {
     content: '';
-    background: rgba(255, 255, 255, 0.187);
+    background: url("../images/5c0a8c0005bb44fd69b34d2196087819.gif") no-repeat center/cover ;
     position: absolute;
     z-index: -5;
-    width: 20vh;
-    height: 20vh;
+    width: 30vh;
+    height: 30vh;
     border-radius: 50%;
     opacity: 0;
+    left: 2rem;
     transition: ease 0.5s all;
 }
 
-
-/* ---- Theme State Rules ---- */
-/* Section Active Styles */
-/* Note: your-active-class class is applied through javascript. You should update the class here and in the index.html to what you set in your javascript file.  */
-section.your-active-class {
-    background: rgb(0, 0, 0);
-    background: linear-gradient(0deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0) 100%);
-}
-
-section.your-active-class .landing-container::before {
+section#about::before {
     opacity: 1;
     animation: rotate 4s linear 0s infinite forwards;
 }
 
-section.your-active-class .landing-container::after {
-    opacity: 1;
-    animation: rotate 5s linear 0s infinite forwards reverse;
+
+section#work::before {
+    content: '';
+    background: url("../images/ef746145bdb70efe829085b027afa20a.gif") no-repeat center/cover ;
+    position: absolute;
+    z-index: -5;
+    width: 30vh;
+    height: 30vh;
+    opacity: 0;
+    right: 2rem;
+    bottom: 1rem;
 }
 
+section#work::before {
+    opacity: 1;
+
+}
 /* Section Active Styles Keyframe Animations */
 @keyframes rotate {
     from {
@@ -250,6 +287,11 @@ section.your-active-class .landing-container::after {
     }
 }
 
+@media only screen and (min-width: 901px) {
+    html {
+        scroll-behavior: smooth;
+    }
+}
 /* ---- Theme State Rules ---- */
 /* Shared Styles */
 .overlay {

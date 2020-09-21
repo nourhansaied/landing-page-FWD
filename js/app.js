@@ -6,202 +6,203 @@
 * and highlights section in viewport upon scrolling.
 *
 * Dependencies: None
-*
 * JS Version: ES2015/ES6
 *
 * JS Standard: ESlint
 *
 * Content:
- * Define Global Variables
- * Start Helper Functions
+ * Define nourPhotography
+ * nourPhotography and renderView
  * Begin Main Functions
  * Events
  *
 */
+const nourPhotography = {
+    init: () => {
+        // render view
+        renderView.init();
+
+        // Hide navbar when scrolling
+        let new_scroll_position = 0,last_scroll_position;
+        let header = document.getElementById("header");
+
+        window.addEventListener('scroll', function(e) {
+            last_scroll_position = window.scrollY;
+            if (new_scroll_position < last_scroll_position && last_scroll_position > 80) {
+                header.classList.remove("slideDown");
+                header.classList.add("slideUp");
+
+            } else if (new_scroll_position > last_scroll_position) {
+                header.classList.remove("slideUp");
+                header.classList.add("slideDown");
+            }
+            new_scroll_position = last_scroll_position;
+        });
+    },
+}
+
 
 /**
  * Define Global Variables
  *
  */
 
-
-/**
- * End Global Variables
- * Start Helper Functions
- *
- */
-
-
 const navigationItems = ['Intro', 'About', 'Work', 'Best-Shot'];
 const ul = document.querySelector('ul');
 
-const mainSections = ['intro','about', 'work', 'best-shot', 'social'];
+const mainSections = ['intro','about', 'work', 'best-shot'];
 const sectionsContainer = document.getElementById('main');
 
-const overlay = document.createElement('div');
 
-const workItems = [
-    {
-        title: "15 Photos",
-        description: " You'll get a set of your colorful and perfectly photoshopped photos."
-    },
-    {
-        title: "1 Month",
-        description: "You'll get these photos within one month, I promise."
-    },
-    {
-        title: "Unique Style",
-        description: "Every photo set is unique, and you're a star, I'll help you to shine."
-    }
-];
 
-/* Creating the Navigation bar */
-function createNavigationContent() {
-    for (let navItem of navigationItems) {
-        let li = document.createElement("li");
-        if (navItem === 'intro') {
-            li.innerHTML += `<a href="#top"><p>${navItem}</p></></a>`;
-            li.id = navItem.toLowerCase();
-            li.className = "active item";
-            ul.appendChild(li);
-        }
-        else {
+
+// Set sections as active
+const renderView = {
+    init: function () {
+        this.createNavigationContent();
+        this.createMainSectionsDOM();
+        this.createIntroSection();
+        this.createAboutSection();
+        this.createWorkSection();
+        this.createBestShotSection();
+
+        let mainNavLinks = document.querySelectorAll("nav ul li a");
+        window.addEventListener("scroll", event => {
+            let fromTop = window.scrollY;
+
+            mainNavLinks.forEach(link => {
+
+                let section = document.querySelector(link.hash);
+                if (
+                    section.offsetTop <= fromTop &&
+                    section.offsetTop + section.offsetHeight > fromTop
+                ) {
+                    link.parentElement.classList.add("current");
+                } else {
+                    link.parentElement.classList.remove("current");
+                }
+            });
+        });
+    },
+    createNavigationContent: () => {
+        for (let navItem of navigationItems) {
+            let li = renderView.createHTMLTag("li");
             let displayedItem;
             if(navItem.includes('-') > 1 ) displayedItem = navItem.replace('-',' ');
             li.innerHTML += `<a href="#${navItem.toLowerCase()}"><p>${displayedItem ? displayedItem : navItem}</p></a>`;
             li.id = navItem;
-            li.className = "navbar-item item";
+            li.className = "navbar-item";
             ul.appendChild(li);
         }
 
+    },
+    createMainSectionsDOM: () => {
+        let newSection;
+        for (let section of mainSections) {
+            newSection = renderView.createHTMLTag("section");
+            newSection.className = "manage-space";
+            newSection.id = `${section.toLowerCase()}`;
+            sectionsContainer.appendChild(newSection);
+        }
+
+    },
+    createIntroSection: () => {
+        const app = document.getElementById('intro');
+        const introContent = renderView.createHTMLTag('div');
+        const grayScale = renderView.createHTMLTag('div');
+        const title = renderView.createHTMLTag('h2');
+        const quote = renderView.createHTMLTag('p');
+        const action = renderView.createHTMLTag('span');
+
+        title.innerText = introText.title;
+        quote.innerText = introText.quote;
+        action.innerText = introText.action;
+
+        grayScale.className = 'gray-scale';
+        introContent.appendChild(grayScale);
+
+        title.className = 'section-title';
+        introContent.appendChild(title);
+
+        quote.className = 'own-quotes';
+        introContent.appendChild(quote);
+
+        action.className = 'goto-gallery';
+        introContent.appendChild(action);
+
+        const overlay = renderView.createHTMLTag('div');
+
+        app.appendChild(overlay);
+        app.appendChild(introContent);
+
+        overlay.className = "overlay";
+        introContent.className = "main-hero-content container align-text-center";
+    },
+    createAboutSection: () => {
+        const about = document.getElementById('about');
+        const aboutContent = renderView.createHTMLTag('div');
+        const aboutHead = renderView.createHTMLTag('h2');
+        const quote = renderView.createHTMLTag('p');
+        const aboutSubText = renderView.createHTMLTag('p');
+        const aboutSub2Text = renderView.createHTMLTag('p');
+
+        aboutHead.innerText = aboutText.title;
+        quote.innerText = aboutText.quote;
+        aboutSubText.innerText = aboutText.sub;
+        aboutSub2Text.innerText = aboutText.sub2;
+
+        aboutContent.appendChild(aboutHead);
+        aboutContent.appendChild(quote);
+        aboutContent.appendChild(aboutSubText);
+        aboutContent.appendChild(aboutSub2Text);
+        about.appendChild(aboutContent);
+
+        aboutContent.className = "landing-container container";
+        aboutHead.className = 'section-main-title';
+
+    },
+    createWorkSection: () => {
+        const work = document.getElementById('work');
+        const workContent = renderView.createHTMLTag('div');
+        const workContentTitle = renderView.createHTMLTag('h2');
+        const workItemsContent = renderView.createHTMLTag('div');
+        workContentTitle.innerText = 'My work';
+        workContentTitle.className = 'section-main-title';
+        let workItem, workItemHeader, workItemDesc;
+        workContent.appendChild(workContentTitle);
+        for (let item of workItems) {
+            workItem = renderView.createHTMLTag("div");
+            workItemHeader = renderView.createHTMLTag("h4");
+            workItemDesc = renderView.createHTMLTag("p");
+            workItemHeader.innerHTML = item.title;
+            workItemDesc.innerHTML = item.description;
+            workItem.className = "work-box";
+            workItemsContent.appendChild(workItemHeader).appendChild(workItemDesc)
+            workContent.appendChild(workItem.appendChild(workItemsContent));
+        }
+
+
+        work.appendChild(workContent);
+
+        workContent.className = "landing-container container";
+        workItemsContent.className = "work-statistics";
+
+    },
+    createBestShotSection: () => {
+        const overlay = renderView.createHTMLTag('div');
+        const bestShot = document.getElementById('best-shot');
+        const aboutContent = renderView.createHTMLTag('div');
+        aboutContent.innerHTML = `<h2 class="best-shot-desc">Every sunset is an opportunity to reset.</h2><p class='best-shot-content'>So, Just RELAX and SMILE</p>`;
+        let newOverlay = overlay;
+        newOverlay.className = 'overlay';
+        bestShot.appendChild(newOverlay);
+        bestShot.appendChild(aboutContent);
+        aboutContent.className = "landing-container container";
+
+    },
+    createHTMLTag:(tagName) => {
+        return document.createElement(`${tagName}`);
     }
-
 }
 
-createNavigationContent();
-
-
-/**
- * End Helper Functions
- * Begin Main Functions
- *
- */
-/* Creating the Content Sections */
-function createMainSectionsDOM() {
-    let newSection;
-    for (let section of mainSections) {
-        newSection = document.createElement("section");
-        newSection.className = "manage-space";
-        newSection.id = `${section.toLowerCase()}`;
-        sectionsContainer.appendChild(newSection);
-    }
-
-}
-
-createMainSectionsDOM();
-
-
-
-/* Creating the Intro Section */
-function createIntroSection() {
-    const app = document.getElementById('intro');
-    const introContent = createHTMLTag('div');
-    const title = createHTMLTag('h2');
-    const quote = createHTMLTag('p');
-    const action = createHTMLTag('span');
-    let introText = {
-        title: "Hello, I'm a photographer!",
-        quote: "Taking an image, freezing a moment, reveals how rich reality truly is.",
-        action: "See my Shots"
-    }
-
-    title.innerText = introText.title;
-    quote.innerText = introText.quote;
-    action.innerText = introText.action;
-
-    title.className = 'section-title';
-    introContent.appendChild(title);
-
-    quote.className = 'own-quotes';
-    introContent.appendChild(quote);
-
-    action.className = 'goto-gallery';
-    introContent.appendChild(action);
-
-    app.appendChild(overlay);
-    app.appendChild(introContent);
-
-    overlay.className = "overlay";
-    introContent.className = "main-hero-content container align-text-center";
-}
-
-createIntroSection();
-
-/* Creating the About Section */
-function createAboutSection() {
-    const about = document.getElementById('about');
-    const aboutContent = document.createElement('div');
-    about.appendChild(aboutContent);
-
-    aboutContent.className = "landing-container container";
-
-}
-
-createAboutSection();
-
-/* Creating the Work Section */
-function createWorkSection() {
-    const work = document.getElementById('work');
-    const workContent = document.createElement('div');
-    const workItemsContent = document.createElement('div');
-    let workItem, workItemHeader, workItemDesc;
-    for (let item of workItems) {
-        workItem = document.createElement("div");
-        workItemHeader = document.createElement("h4");
-        workItemDesc = document.createElement("p");
-        workItemHeader.innerHTML = item.title;
-        workItemDesc.innerHTML = item.description;
-        workItem.className = "work-box";
-        workItemsContent.appendChild(workItemHeader).appendChild(workItemDesc)
-        workContent.appendChild(workItem.appendChild(workItemsContent));
-    }
-    work.appendChild(workContent);
-
-    workContent.className = "landing-container container";
-    workItemsContent.className = "work-statistics";
-
-}
-
-createWorkSection();
-
-/* Creating the Work Section */
-function createBestShotSection() {
-    const bestShot = document.getElementById('best-shot');
-    const aboutContent = document.createElement('div');
-    bestShot.appendChild(aboutContent);
-
-    aboutContent.className = "landing-container container";
-
-}
-
-createBestShotSection();
-// Add class 'active' to section when near top of viewport
-
-function createHTMLTag(tagName) {
-    return document.createElement(`${tagName}`);
-}
-
-// Scroll to anchor ID using scrollTO event
-
-
-/**
- * End Main Functions
- * Begin Events
- *
- */
-
-// Build menu
-
-// Scroll to section on link click
-
-// Set sections as active
+nourPhotography.init();
