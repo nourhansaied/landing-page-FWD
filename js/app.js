@@ -24,19 +24,16 @@ const nourPhotography = {
 
         // Hide navbar when scrolling
         let new_scroll_position = 0,last_scroll_position;
-        let header = document.getElementById("header");
 
         window.addEventListener('scroll', function(e) {
-            last_scroll_position = window.scrollY;
-            if (new_scroll_position < last_scroll_position && last_scroll_position > 80) {
-                header.classList.remove("slideDown");
-                header.classList.add("slideUp");
-
-            } else if (new_scroll_position > last_scroll_position) {
-                header.classList.remove("slideUp");
-                header.classList.add("slideDown");
+            new_scroll_position = window.scrollY;
+            const scroller = document.getElementById('scrollMeUp');
+            if (last_scroll_position > 100 || window.scrollY  > 100) {
+                scroller.classList.remove('display-none');
             }
-            new_scroll_position = last_scroll_position;
+            else {
+                scroller.classList.add('display-none');
+            }
         });
     },
 }
@@ -72,18 +69,32 @@ const renderView = {
             let fromTop = window.scrollY + 110;
 
             mainNavLinks.forEach(link => {
-
                 let section = document.querySelector(link.hash);
                 if (
                     section.offsetTop <= fromTop &&
                     section.offsetTop + section.offsetHeight > fromTop
                 ) {
+                    section.classList.add('active')
                     link.parentElement.classList.add("current");
                 } else {
+                    section.classList.remove('active')
                     link.parentElement.classList.remove("current");
                 }
             });
+
+
         });
+
+
+        const scrollTopContainer = renderView.createHTMLTag('div');
+        scrollTopContainer.className = 'scroll-top display-none';
+        scrollTopContainer.id = 'scrollMeUp';
+        const scrollTopIcon = renderView.createHTMLTag('span');
+        scrollTopIcon.className = 'fas fa-chevron-up';
+        scrollTopContainer.append(scrollTopIcon);
+        document.getElementsByTagName('body')[0].prepend(scrollTopContainer)
+
+
     },
     createNavigationContent: () => {
         for (let navItem of navigationItems) {
@@ -100,12 +111,22 @@ const renderView = {
     createMainSectionsDOM: () => {
         let newSection;
         for (let section of mainSections) {
+
             newSection = renderView.createHTMLTag("section");
             newSection.className = "manage-space";
             newSection.id = `${section.toLowerCase()}`;
+            if(section.toLowerCase() !== 'intro') {
+                const sectionContainer = renderView.createHTMLTag('div');
+                sectionContainer.className = "landing-container container";
+                newSection.appendChild(sectionContainer);
+            }
+
             sectionsContainer.appendChild(newSection);
         }
+        const sectionContainer = renderView.createHTMLTag('div');
+        sectionContainer.className = "landing-container container";
 
+        document.getElementsByTagName('footer')[0].prepend(sectionContainer)
     },
     createIntroSection: () => {
         const app = document.getElementById('intro');
@@ -140,8 +161,7 @@ const renderView = {
         introContent.className = "main-hero-content container align-text-center";
     },
     createAboutSection: () => {
-        const about = document.getElementById('about');
-        const aboutContent = renderView.createHTMLTag('div');
+        const about = document.querySelector('#about .container');
         const aboutHead = renderView.createHTMLTag('h2');
         const quote = renderView.createHTMLTag('p');
         const aboutSubText = renderView.createHTMLTag('p');
@@ -152,25 +172,22 @@ const renderView = {
         aboutSubText.innerText = aboutText.sub;
         aboutSub2Text.innerText = aboutText.sub2;
 
-        aboutContent.appendChild(aboutHead);
-        aboutContent.appendChild(quote);
-        aboutContent.appendChild(aboutSubText);
-        aboutContent.appendChild(aboutSub2Text);
-        about.appendChild(aboutContent);
+        about.appendChild(aboutHead);
+        about.appendChild(quote);
+        about.appendChild(aboutSubText);
+        about.appendChild(aboutSub2Text);
 
-        aboutContent.className = "landing-container container";
         aboutHead.className = 'section-main-title';
 
     },
     createWorkSection: () => {
-        const work = document.getElementById('work');
-        const workContent = renderView.createHTMLTag('div');
+        const work = document.querySelector('#work .container');
         const workContentTitle = renderView.createHTMLTag('h2');
         const workItemsContent = renderView.createHTMLTag('div');
         workContentTitle.innerText = 'My work';
         workContentTitle.className = 'section-main-title';
         let workItem, workItemHeader, workItemDesc;
-        workContent.appendChild(workContentTitle);
+        work.appendChild(workContentTitle);
         for (let item of workItems) {
             workItem = renderView.createHTMLTag("div");
             workItemHeader = renderView.createHTMLTag("h4");
@@ -179,31 +196,21 @@ const renderView = {
             workItemDesc.innerHTML = item.description;
             workItem.className = "work-box";
             workItemsContent.appendChild(workItemHeader).appendChild(workItemDesc)
-            workContent.appendChild(workItem.appendChild(workItemsContent));
+            work.appendChild(workItem.appendChild(workItemsContent));
         }
-
-
-        work.appendChild(workContent);
-
-        workContent.className = "landing-container container";
         workItemsContent.className = "work-statistics";
 
     },
     createBestShotSection: () => {
         const overlay = renderView.createHTMLTag('div');
-        const bestShot = document.getElementById('best-shot');
-        const bestContent = renderView.createHTMLTag('div');
-        bestContent.innerHTML = `<h2 class="best-shot-desc">Every sunset is an opportunity to reset.</h2><p class='best-shot-content'>So, Just RELAX and SMILE</p>`;
-        let newOverlay = overlay;
-        newOverlay.className = 'overlay';
-        bestShot.appendChild(newOverlay);
-        bestShot.appendChild(bestContent);
-        bestContent.className = "landing-container container";
+        const bestShot = document.querySelector('#best-shot .container');
+        bestShot.innerHTML = `<h2 class="best-shot-desc">Every sunset is an opportunity to reset.</h2><p class='best-shot-content'>So, Just RELAX and SMILE</p>`;
+        overlay.className = 'overlay';
+        document.querySelector('#best-shot').prepend(overlay);
 
     },
     createFooterContent: () =>{
-        const footer = document.getElementsByClassName('page-footer')[0];
-        const footerContent = renderView.createHTMLTag('div');
+        const footer = document.querySelector('.page-footer .container');
         const footerTitleContent = renderView.createHTMLTag('h2');
         const footerUlContent = renderView.createHTMLTag('ul');
         footerTitleContent.innerHTML = 'Contact me &#128526'
@@ -216,11 +223,8 @@ const renderView = {
             footerUlContent.appendChild(li);
         });
         footerTitleContent.className = 'section-main-title';
-        footerContent.append(footerTitleContent)
-        footerContent.append(footerUlContent);
-
-        footer.prepend(footerContent);
-        footerContent.className = "landing-container container";
+        footer.append(footerTitleContent)
+        footer.append(footerUlContent);
 
     },
     createHTMLTag:(tagName) => {
